@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Office of W. Adam Izell - SEO Campaign Dashboard</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+        
+        // Icon Components
+        const CheckCircle2 = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        );
+        
+        const Circle = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" strokeWidth={2} />
+            </svg>
+        );
+        
+        const Clock = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" strokeWidth={2} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6l4 2" />
+            </svg>
+        );
+        
+        const AlertCircle = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" strokeWidth={2} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01" />
+            </svg>
+        );
+        
+        const TrendingUp = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+            </svg>
+        );
+        
+        const Target = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" strokeWidth={2} />
+                <circle cx="12" cy="12" r="6" strokeWidth={2} />
+                <circle cx="12" cy="12" r="2" strokeWidth={2} />
+            </svg>
+        );
+        
+        const Scale = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+            </svg>
+        );
+
+        const IzellSEODashboard = () => {
+            const [activePhase, setActivePhase] = useState(1);
+            const [taskStatuses, setTaskStatuses] = useState({});
+            const [filterStatus, setFilterStatus] = useState('all');
+
+            // Project Overview
+            const projectInfo = {
+                client: "Law Office of W. Adam Izell, PLLC",
+                domain: "chattlawyer.com",
+                serviceArea: "Chattanooga, TN (Hamilton, Walker & Catoosa Counties)",
+                currentGrade: "C-",
+                targetGrade: "A",
+                timeframe: "90-180 days",
+                monthlySearchVolume: "4,700+",
+                successProbability: "85%"
+            };
+
+            // Current State
+            const currentState = [
+                { category: "Google Business Profile", score: 60, status: "Active but underoptimized", priority: "HIGH" },
+                { category: "On-Page SEO", score: 40, status: "Basic implementation", priority: "HIGH" },
+                { category: "Citation Profile", score: 25, status: "Partial coverage (20-30%)", priority: "CRITICAL" },
+                { category: "Reviews & Reputation", score: 70, status: "7 reviews (5.0 rating)", priority: "MEDIUM" },
+                { category: "Content Strategy", score: 30, status: "Minimal depth", priority: "HIGH" },
+                { category: "Backlinks & Authority", score: 20, status: "Low (DA 15-20)", priority: "HIGH" },
+            ];
+
+            // Phase Definitions
+            const phases = [
+                {
+                    id: 1,
+                    name: "Foundation & Launch",
+                    duration: "Days 1-30",
+                    objective: "Establish technical foundation, optimize GMB, launch initial citations",
+                    expectedOutcome: "GMB optimized, 50+ citations, 4-6 new reviews, core pages optimized",
+                    categories: [
+                        {
+                            name: "Google Business Profile",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "gmb-1",
+                                    name: "Complete all business categories (Primary: Criminal Justice Attorney, Secondary: DUI Defense, Personal Injury, Estate Planning)",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "gmb-2",
+                                    name: "Write comprehensive business description (750 chars) highlighting TN/GA/Federal licensing + SCOTUS admission",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "gmb-3",
+                                    name: "Upload 30-40 high-quality photos (exterior, interior, team, credentials, 360° tour)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "gmb-4",
+                                    name: "Add all service offerings with detailed descriptions (DUI, Criminal Defense, Personal Injury, Estate Planning)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "gmb-5",
+                                    name: "Enable attributes (free consultation, wheelchair accessible, accepts credit cards)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "gmb-6",
+                                    name: "Seed Q&A section with 15 strategic questions and detailed answers",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "gmb-7",
+                                    name: "Create first 3 Google Posts (announcements about practice areas and free consultations)",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Technical SEO Foundation",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "tech-1",
+                                    name: "Install and configure Yoast SEO or Rank Math plugin",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "tech-2",
+                                    name: "Set up Google Search Console and verify property",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "tech-3",
+                                    name: "Set up Google Analytics 4 with conversion tracking",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "tech-4",
+                                    name: "Create and submit XML sitemap to search engines",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "tech-5",
+                                    name: "Implement LocalBusiness schema markup on homepage",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "tech-6",
+                                    name: "Add Attorney schema to attorney bio page",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "tech-7",
+                                    name: "Fix critical page speed issues (image compression, caching)",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "tech-8",
+                                    name: "Optimize all H1 tags for target keywords",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "tech-9",
+                                    name: "Rewrite all meta titles (55-60 chars, keyword-rich)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "tech-10",
+                                    name: "Rewrite all meta descriptions (150-160 chars with CTAs)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "tech-11",
+                                    name: "Add alt tags to all images on website",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "tech-12",
+                                    name: "Create robots.txt file and set up canonical tags",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Citation Building (Tier 1 & 2)",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "cite-1",
+                                    name: "Submit to major aggregators (Apple Maps, Bing Places, Yahoo Local, Yelp, Facebook)",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "cite-2",
+                                    name: "Optimize Avvo profile (already listed - claim and complete)",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "cite-3",
+                                    name: "Claim and optimize Justia profile",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "cite-4",
+                                    name: "Submit to legal directories (Lawyers.com, FindLaw, Martindale-Hubbell, HG.org, LawInfo, Nolo)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "cite-5",
+                                    name: "Submit to Tennessee Bar Association directory",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "cite-6",
+                                    name: "Submit to Chattanooga Bar Association",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "cite-7",
+                                    name: "Submit to Chattanooga Chamber of Commerce",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "cite-8",
+                                    name: "Submit to Tennessee-specific directories (Tennessee.gov, ComeToChattanooga.com, local business listings)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "cite-9",
+                                    name: "Submit to State Bar of Georgia (for GA service area)",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Core Content Optimization",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "content-1",
+                                    name: "Rewrite homepage (1,200-1,500 words with unique value props, credentials, service areas, FAQ schema)",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "content-2",
+                                    name: "Expand DUI/DWI Defense page to 2,500-3,000 words (comprehensive TN DUI law guide, defense strategies, FAQ)",
+                                    priority: "critical"
+                                },
+                                {
+                                    id: "content-3",
+                                    name: "Expand Criminal Defense hub page to 2,000-2,500 words (service overview, state vs federal experience, rights)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "content-4",
+                                    name: "Create Drug Crimes Defense page (700-800 words)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "content-5",
+                                    name: "Create Assault & Violent Crimes page (700-800 words)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "content-6",
+                                    name: "Create Federal Criminal Defense page (700-800 words)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "content-7",
+                                    name: "Expand Personal Injury page to 2,000 words (case types, TN law overview, damages)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "content-8",
+                                    name: "Expand Estate Planning page to 1,500-2,000 words (wills, trusts, probate, guardianship)",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Review Generation",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "review-1",
+                                    name: "Set up automated review request email system",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "review-2",
+                                    name: "Create SMS review request template",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "review-3",
+                                    name: "Create review landing page (chattlawyer.com/review)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "review-4",
+                                    name: "Reach out to 20-30 satisfied past clients via personalized email",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "review-5",
+                                    name: "Implement new client review request protocol",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Initial Blog Content",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "blog-1",
+                                    name: "Publish: 'What Happens at a DUI Checkpoint in Tennessee?' (1,500-2,000 words)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "blog-2",
+                                    name: "Publish: '5 Common DUI Defense Strategies That Work' (1,500-2,000 words)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "blog-3",
+                                    name: "Publish: 'First-Time DUI in Chattanooga: What to Expect' (1,500-2,000 words)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "blog-4",
+                                    name: "Publish: 'What Are Your Rights When Arrested in Tennessee?' (1,500-2,000 words)",
+                                    priority: "medium"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "Scaling & Authority Building",
+                    duration: "Days 31-60",
+                    objective: "Scale content, build quality backlinks, expand citations to 80+, grow to 12-15 reviews",
+                    expectedOutcome: "80+ citations, location pages live, 8 blog posts total, initial ranking improvements, 5-10 backlinks",
+                    categories: [
+                        {
+                            name: "Location Pages",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "loc-1",
+                                    name: "Create Hamilton County Criminal Defense Lawyer page (800-1,000 words with court info)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "loc-2",
+                                    name: "Create Chattanooga DUI Attorney page (1,000-1,200 words with local enforcement patterns)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "loc-3",
+                                    name: "Create Walker County GA Criminal Defense page (700-900 words with GA law differences)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "loc-4",
+                                    name: "Create Catoosa County GA DUI Lawyer page (700-900 words)",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Citation Building (Tier 3)",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "cite-10",
+                                    name: "Submit to national directories (YellowPages, Superpages, MerchantCircle, CitySquares, EZLocal)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "cite-11",
+                                    name: "Submit to legal directories (Expertise.com, ThreeBestRated, TopRatedLocal, USAttorneys)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "cite-12",
+                                    name: "Submit to local business platforms (Nextdoor Business, Alignable, Angi, Thumbtack)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "cite-13",
+                                    name: "Submit to DUI-specific directories (DUIAttorneyGuide.com, DUILawyersDirectory.com)",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Link Building Launch",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "link-1",
+                                    name: "Complete and optimize all legal directory profiles (Avvo, Justia, FindLaw, Lawyers.com)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "link-2",
+                                    name: "Submit enhanced profile to Tennessee Bar Association",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "link-3",
+                                    name: "Apply for Chattanooga Chamber of Commerce membership (if not member)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "link-4",
+                                    name: "Reach out to 10 local blogs for guest post opportunities",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "link-5",
+                                    name: "Build relationships with bail bonds companies for referral links",
+                                    priority: "low"
+                                },
+                                {
+                                    id: "link-6",
+                                    name: "Reach out to local towing companies for partnership links",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Advanced Technical SEO",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "tech-13",
+                                    name: "Implement FAQ schema on all service pages",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "tech-14",
+                                    name: "Add Review schema (aggregate ratings)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "tech-15",
+                                    name: "Implement Breadcrumb schema",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "tech-16",
+                                    name: "Add LegalService schema for all practice areas",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "tech-17",
+                                    name: "Implement lazy loading for all images",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "tech-18",
+                                    name: "Minify all CSS and JavaScript files",
+                                    priority: "low"
+                                },
+                                {
+                                    id: "tech-19",
+                                    name: "Set up CDN (Cloudflare free tier)",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Content Expansion",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "blog-5",
+                                    name: "Publish: 'Can I Refuse a Breathalyzer Test in Tennessee?' (1,500-2,000 words)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "blog-6",
+                                    name: "Publish: 'How Much Does a DUI Cost in Tennessee?' (1,500-2,000 words)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "blog-7",
+                                    name: "Publish: 'DUI vs. DWI in Tennessee: What's the Difference?' (1,500 words)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "blog-8",
+                                    name: "Publish: 'Getting Your License Back After DUI Suspension' (1,500-2,000 words)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "content-9",
+                                    name: "Create downloadable DUI Rights Guide PDF",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "GMB & Review Maintenance",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "gmb-8",
+                                    name: "Publish 8-12 Google Posts (mix of educational, service announcements, tips)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "gmb-9",
+                                    name: "Add 10 more Q&A entries to GMB profile",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "review-6",
+                                    name: "Reach out to 10 more satisfied clients for reviews",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "review-7",
+                                    name: "Respond to all reviews within 24 hours",
+                                    priority: "high"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    name: "Momentum & Rankings",
+                    duration: "Days 61-90",
+                    objective: "Achieve initial top 10 rankings, reach 18-22 reviews, complete 100+ citations, secure quality backlinks",
+                    expectedOutcome: "100+ citations, GMB Map Pack appearances, 10-15 backlinks, 5-10 long-tail keyword rankings",
+                    categories: [
+                        {
+                            name: "Link Building Acceleration",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "link-7",
+                                    name: "Publish guest post #1 on relevant local/legal blog",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "link-8",
+                                    name: "Reach out to Chattanooga Times Free Press for guest article opportunity",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "link-9",
+                                    name: "Submit press release about firm milestone or community involvement",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "link-10",
+                                    name: "Sponsor local community event for backlink",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "link-11",
+                                    name: "Reach out to UTC for guest lecture opportunity (with profile link)",
+                                    priority: "low"
+                                },
+                                {
+                                    id: "link-12",
+                                    name: "Create legal scholarship program with university links",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Content Depth & Authority",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "blog-9",
+                                    name: "Publish: 'Tennessee DUI Laws: Complete Guide [2025]' (2,500+ word pillar post)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "blog-10",
+                                    name: "Publish: 'Drug Possession vs. Intent to Distribute' (1,500-2,000 words)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "blog-11",
+                                    name: "Publish: 'Federal vs. State Criminal Charges' (1,500-2,000 words)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "blog-12",
+                                    name: "Publish: 'Can Police Search My Car Without a Warrant?' (1,500 words)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "content-10",
+                                    name: "Update existing service pages with fresh content and data",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "content-11",
+                                    name: "Add video content to homepage and key service pages",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Citation Completion",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "cite-14",
+                                    name: "Complete all remaining Tier 3 citations (reach 90+ total)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "cite-15",
+                                    name: "Add citations to niche legal directories (Personal Injury, DUI-specific)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "cite-16",
+                                    name: "Verify all existing citations for NAP consistency",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "cite-17",
+                                    name: "Fix any duplicate or incorrect listings",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Social Media & Brand",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "social-1",
+                                    name: "Launch consistent Facebook posting schedule (3-4x/week)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "social-2",
+                                    name: "Optimize LinkedIn profile and company page",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "social-3",
+                                    name: "Create Instagram business profile and post regularly",
+                                    priority: "low"
+                                },
+                                {
+                                    id: "social-4",
+                                    name: "Test Facebook ad campaigns for DUI and criminal defense",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Performance Optimization",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "opt-1",
+                                    name: "Conduct comprehensive technical SEO audit #2",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "opt-2",
+                                    name: "Analyze Google Search Console data and optimize underperforming pages",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "opt-3",
+                                    name: "Review competitor rankings and adjust strategy",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "opt-4",
+                                    name: "Implement conversion rate optimization (CRO) improvements",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "opt-5",
+                                    name: "Set up advanced goal tracking in Google Analytics",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Review & Reputation Management",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "review-8",
+                                    name: "Reach out to 10 more satisfied clients for reviews",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "review-9",
+                                    name: "Monitor and respond to all reviews across platforms within 24h",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "review-10",
+                                    name: "Optimize Avvo profile for maximum visibility",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "gmb-10",
+                                    name: "Continue weekly GMB posts (12-15 more posts)",
+                                    priority: "medium"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 4,
+                    name: "Domination Phase",
+                    duration: "Days 91-180",
+                    objective: "Achieve top 3 Map Pack rankings for priority keywords, reach 40+ reviews, establish content authority",
+                    expectedOutcome: "Top 3 Maps for 10+ keywords, Page 1 organic for 15-20 keywords, 200-300 monthly visits, 10-15 leads/month",
+                    categories: [
+                        {
+                            name: "Advanced Content Strategy",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "content-12",
+                                    name: "Publish 24+ additional blog posts (2 per week)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "content-13",
+                                    name: "Create comprehensive FAQ pages for each practice area",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "content-14",
+                                    name: "Develop case study content (anonymized success stories)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "content-15",
+                                    name: "Create video content library (FAQ videos, practice area overviews)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "content-16",
+                                    name: "Publish 'Ultimate Guide' resources for key topics",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Strategic Link Building",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "link-13",
+                                    name: "Secure 15-20 additional quality backlinks from relevant sources",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "link-14",
+                                    name: "Publish 3-5 additional guest posts on high-authority sites",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "link-15",
+                                    name: "Launch HARO (Help A Reporter Out) outreach campaign",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "link-16",
+                                    name: "Identify and replicate competitor backlinks",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "link-17",
+                                    name: "Build relationships with legal bloggers and journalists",
+                                    priority: "low"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Local Dominance",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "local-1",
+                                    name: "Maintain citation count at 120+ with regular audits",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "local-2",
+                                    name: "Continue weekly GMB posts (40-50 total posts)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "local-3",
+                                    name: "Expand location-specific content for surrounding areas",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "local-4",
+                                    name: "Build partnerships with local businesses for cross-promotion",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Review & Reputation Scaling",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "review-11",
+                                    name: "Grow to 40-50 total reviews (maintain 4.8+ rating)",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "review-12",
+                                    name: "Diversify reviews across multiple platforms (Google, Avvo, Facebook)",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "review-13",
+                                    name: "Implement automated review monitoring and response system",
+                                    priority: "medium"
+                                }
+                            ]
+                        },
+                        {
+                            name: "Analytics & Optimization",
+                            progress: 0,
+                            tasks: [
+                                {
+                                    id: "analytics-1",
+                                    name: "Weekly ranking tracking and reporting",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "analytics-2",
+                                    name: "Monthly comprehensive analytics review",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "analytics-3",
+                                    name: "Continuous conversion rate optimization based on data",
+                                    priority: "high"
+                                },
+                                {
+                                    id: "analytics-4",
+                                    name: "A/B testing of key landing pages",
+                                    priority: "medium"
+                                },
+                                {
+                                    id: "analytics-5",
+                                    name: "Adjust strategy based on performance metrics",
+                                    priority: "high"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ];
+
+            const getTaskStatus = (taskId) => {
+                return taskStatuses[taskId] || 'pending';
+            };
+
+            const updateTaskStatus = (taskId, status) => {
+                setTaskStatuses(prev => ({
+                    ...prev,
+                    [taskId]: status
+                }));
+            };
+
+            const getStatusIcon = (status) => {
+                switch(status) {
+                    case 'completed':
+                        return <CheckCircle2 className="w-5 h-5 text-green-600" />;
+                    case 'in-progress':
+                        return <Clock className="w-5 h-5 text-blue-600" />;
+                    case 'blocked':
+                        return <AlertCircle className="w-5 h-5 text-red-600" />;
+                    default:
+                        return <Circle className="w-5 h-5 text-gray-400" />;
+                }
+            };
+
+            const getStatusColor = (status) => {
+                switch(status) {
+                    case 'completed':
+                        return 'border-green-300 bg-green-50';
+                    case 'in-progress':
+                        return 'border-blue-300 bg-blue-50';
+                    case 'blocked':
+                        return 'border-red-300 bg-red-50';
+                    default:
+                        return 'border-gray-200 bg-white';
+                }
+            };
+
+            const getPriorityBadge = (priority) => {
+                switch(priority) {
+                    case 'critical':
+                        return 'bg-red-100 text-red-800 border-red-300';
+                    case 'high':
+                        return 'bg-orange-100 text-orange-800 border-orange-300';
+                    case 'medium':
+                        return 'bg-yellow-100 text-yellow-800 border-yellow-300';
+                    case 'low':
+                        return 'bg-gray-100 text-gray-800 border-gray-300';
+                    default:
+                        return 'bg-gray-100 text-gray-600 border-gray-300';
+                }
+            };
+
+            const calculateCategoryProgress = (category) => {
+                const totalTasks = category.tasks.length;
+                const completedTasks = category.tasks.filter(
+                    task => getTaskStatus(task.id) === 'completed'
+                ).length;
+                return Math.round((completedTasks / totalTasks) * 100);
+            };
+
+            const calculatePhaseProgress = (phase) => {
+                let totalTasks = 0;
+                let completedTasks = 0;
+                
+                phase.categories.forEach(category => {
+                    category.tasks.forEach(task => {
+                        totalTasks++;
+                        if (getTaskStatus(task.id) === 'completed') {
+                            completedTasks++;
+                        }
+                    });
+                });
+                
+                return totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            };
+
+            const activePhaseData = phases.find(p => p.id === activePhase);
+            
+            const filteredTasks = activePhaseData.categories.flatMap(cat => 
+                cat.tasks.filter(task => {
+                    if (filterStatus === 'all') return true;
+                    return getTaskStatus(task.id) === filterStatus;
+                })
+            );
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+                    {/* Header */}
+                    <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white shadow-xl">
+                        <div className="max-w-7xl mx-auto px-6 py-8">
+                            <div className="flex items-center gap-4 mb-6">
+                                <Scale className="w-12 h-12" />
+                                <div>
+                                    <h1 className="text-3xl font-bold mb-1">{projectInfo.client}</h1>
+                                    <p className="text-blue-200 text-lg">Local SEO Campaign Dashboard - {projectInfo.timeframe}</p>
+                                </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                    <div className="text-blue-200 text-sm mb-1">Domain</div>
+                                    <div className="text-xl font-bold">{projectInfo.domain}</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                    <div className="text-blue-200 text-sm mb-1">Service Area</div>
+                                    <div className="text-xl font-bold">{projectInfo.serviceArea.split('(')[0]}</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                    <div className="text-blue-200 text-sm mb-1">Target Grade</div>
+                                    <div className="text-xl font-bold">{projectInfo.currentGrade} → {projectInfo.targetGrade}</div>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                    <div className="text-blue-200 text-sm mb-1">Monthly Volume</div>
+                                    <div className="text-xl font-bold">{projectInfo.monthlySearchVolume}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Current State Assessment */}
+                    <div className="max-w-7xl mx-auto px-6 py-8">
+                        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Current State Assessment</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {currentState.map((item, idx) => (
+                                    <div key={idx} className="border-2 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                        <div className="flex justify-between items-start mb-2">
+                                            <h3 className="font-semibold text-gray-900">{item.category}</h3>
+                                            <span className={`text-xs px-2 py-1 rounded-full border font-medium ${getPriorityBadge(item.priority.toLowerCase())}`}>
+                                                {item.priority}
+                                            </span>
+                                        </div>
+                                        <div className="mb-3">
+                                            <div className="flex justify-between text-sm mb-1">
+                                                <span className="text-gray-600">Score</span>
+                                                <span className="font-semibold text-gray-900">{item.score}%</span>
+                                            </div>
+                                            <div className="w-full bg-gray-200 rounded-full h-2">
+                                                <div 
+                                                    className={`h-2 rounded-full ${
+                                                        item.score >= 70 ? 'bg-green-500' : 
+                                                        item.score >= 40 ? 'bg-yellow-500' : 'bg-red-500'
+                                                    }`}
+                                                    style={{ width: `${item.score}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                        <p className="text-sm text-gray-600">{item.status}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Phase Navigation */}
+                        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6">Campaign Phases</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                {phases.map(phase => (
+                                    <button
+                                        key={phase.id}
+                                        onClick={() => setActivePhase(phase.id)}
+                                        className={`p-4 rounded-lg border-2 transition-all text-left ${
+                                            activePhase === phase.id
+                                                ? 'border-blue-600 bg-blue-50 shadow-md'
+                                                : 'border-gray-200 bg-white hover:border-blue-300'
+                                        }`}
+                                    >
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <Target className="w-5 h-5 text-blue-600" />
+                                            <span className="font-bold text-gray-900">Phase {phase.id}</span>
+                                        </div>
+                                        <h3 className="font-semibold text-gray-900 mb-1">{phase.name}</h3>
+                                        <p className="text-sm text-gray-600 mb-3">{phase.duration}</p>
+                                        <div className="flex justify-between items-center text-sm">
+                                            <span className="text-gray-600">Progress</span>
+                                            <span className="font-bold text-blue-600">{calculatePhaseProgress(phase)}%</span>
+                                        </div>
+                                        <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                                            <div 
+                                                className="bg-blue-600 h-2 rounded-full transition-all"
+                                                style={{ width: `${calculatePhaseProgress(phase)}%` }}
+                                            ></div>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Active Phase Details */}
+                        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+                            <div className="flex justify-between items-start mb-6">
+                                <div>
+                                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                                        Phase {activePhaseData.id}: {activePhaseData.name}
+                                    </h2>
+                                    <p className="text-gray-600 mb-2">
+                                        <span className="font-semibold">Timeline:</span> {activePhaseData.duration}
+                                    </p>
+                                    <p className="text-gray-600 mb-2">
+                                        <span className="font-semibold">Objective:</span> {activePhaseData.objective}
+                                    </p>
+                                    <p className="text-gray-600">
+                                        <span className="font-semibold">Expected Outcome:</span> {activePhaseData.expectedOutcome}
+                                    </p>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-3xl font-bold text-blue-600 mb-1">
+                                        {calculatePhaseProgress(activePhaseData)}%
+                                    </div>
+                                    <div className="text-sm text-gray-600">Complete</div>
+                                </div>
+                            </div>
+
+                            {/* Filter Controls */}
+                            <div className="flex gap-2 mb-6 border-t pt-4">
+                                <button
+                                    onClick={() => setFilterStatus('all')}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                        filterStatus === 'all'
+                                            ? 'bg-gray-800 text-white'
+                                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    All Tasks
+                                </button>
+                                <button
+                                    onClick={() => setFilterStatus('pending')}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                        filterStatus === 'pending'
+                                            ? 'bg-gray-800 text-white'
+                                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    Pending
+                                </button>
+                                <button
+                                    onClick={() => setFilterStatus('in-progress')}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                        filterStatus === 'in-progress'
+                                            ? 'bg-blue-600 text-white'
+                                            : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                                    }`}
+                                >
+                                    In Progress
+                                </button>
+                                <button
+                                    onClick={() => setFilterStatus('completed')}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                        filterStatus === 'completed'
+                                            ? 'bg-green-600 text-white'
+                                            : 'bg-green-100 text-green-700 hover:bg-green-200'
+                                    }`}
+                                >
+                                    Completed
+                                </button>
+                                <button
+                                    onClick={() => setFilterStatus('blocked')}
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                                        filterStatus === 'blocked'
+                                            ? 'bg-red-600 text-white'
+                                            : 'bg-red-100 text-red-700 hover:bg-red-200'
+                                    }`}
+                                >
+                                    Blocked
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Task Categories */}
+                        <div className="space-y-6">
+                            {activePhaseData.categories.map((category, catIdx) => {
+                                const filteredTasks = category.tasks.filter(task => {
+                                    if (filterStatus === 'all') return true;
+                                    return getTaskStatus(task.id) === filterStatus;
+                                });
+
+                                if (filteredTasks.length === 0) return null;
+
+                                return (
+                                    <div key={catIdx} className="bg-white rounded-xl shadow-lg overflow-hidden">
+                                        <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-4">
+                                            <div className="flex justify-between items-center text-white">
+                                                <h3 className="text-xl font-bold">{category.name}</h3>
+                                                <span className="text-2xl font-bold">
+                                                    {calculateCategoryProgress(category)}%
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="p-4">
+                                            <div className="space-y-3">
+                                                {filteredTasks.map((task) => {
+                                                    const status = getTaskStatus(task.id);
+                                                    return (
+                                                        <div 
+                                                            key={task.id}
+                                                            className={`border-2 rounded-lg p-4 transition-all ${getStatusColor(status)}`}
+                                                        >
+                                                            <div className="flex items-start gap-3">
+                                                                <div className="mt-1">
+                                                                    {getStatusIcon(status)}
+                                                                </div>
+                                                                <div className="flex-1">
+                                                                    <div className="flex justify-between items-start mb-2">
+                                                                        <div className="flex-1">
+                                                                            <h4 className="font-medium text-gray-900 mb-1">{task.name}</h4>
+                                                                        </div>
+                                                                        <span className={`text-xs px-2 py-1 rounded-full border font-medium ${getPriorityBadge(task.priority)}`}>
+                                                                            {task.priority.toUpperCase()}
+                                                                        </span>
+                                                                    </div>
+                                                                    
+                                                                    <div className="flex gap-2 mt-3">
+                                                                        <button
+                                                                            onClick={() => updateTaskStatus(task.id, 'pending')}
+                                                                            className={`px-3 py-1 text-xs rounded transition-all ${
+                                                                                status === 'pending' 
+                                                                                    ? 'bg-gray-600 text-white' 
+                                                                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                                                            }`}
+                                                                        >
+                                                                            Pending
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => updateTaskStatus(task.id, 'in-progress')}
+                                                                            className={`px-3 py-1 text-xs rounded transition-all ${
+                                                                                status === 'in-progress' 
+                                                                                    ? 'bg-blue-600 text-white' 
+                                                                                    : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                                                                            }`}
+                                                                        >
+                                                                            In Progress
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => updateTaskStatus(task.id, 'completed')}
+                                                                            className={`px-3 py-1 text-xs rounded transition-all ${
+                                                                                status === 'completed' 
+                                                                                    ? 'bg-green-600 text-white' 
+                                                                                    : 'bg-green-100 text-green-700 hover:bg-green-200'
+                                                                            }`}
+                                                                        >
+                                                                            Completed
+                                                                        </button>
+                                                                        <button
+                                                                            onClick={() => updateTaskStatus(task.id, 'blocked')}
+                                                                            className={`px-3 py-1 text-xs rounded transition-all ${
+                                                                                status === 'blocked' 
+                                                                                    ? 'bg-red-600 text-white' 
+                                                                                    : 'bg-red-100 text-red-700 hover:bg-red-200'
+                                                                            }`}
+                                                                        >
+                                                                            Blocked
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* Target Metrics Footer */}
+                        <div className="max-w-7xl mx-auto mt-8">
+                            <div className="bg-gradient-to-r from-blue-900 to-blue-800 rounded-xl shadow-lg p-6 text-white">
+                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                                    <TrendingUp className="w-6 h-6" />
+                                    Target Metrics by Campaign Completion
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                        <div className="text-sm mb-1 text-blue-200">90-Day Target</div>
+                                        <div className="text-2xl font-bold mb-1">100+ Citations + 20 Reviews</div>
+                                        <div className="text-sm opacity-90">Initial Map Pack appearances</div>
+                                    </div>
+                                    <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                        <div className="text-sm mb-1 text-blue-200">120-Day Target</div>
+                                        <div className="text-2xl font-bold mb-1">Top 5 for 10+ Keywords</div>
+                                        <div className="text-sm opacity-90">Authority building momentum</div>
+                                    </div>
+                                    <div className="bg-white/10 backdrop-blur rounded-lg p-4">
+                                        <div className="text-sm mb-1 text-blue-200">180-Day Target</div>
+                                        <div className="text-2xl font-bold mb-1">Top 3 Maps + 10-15 Leads/Month</div>
+                                        <div className="text-sm opacity-90">Market dominance achieved</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Footer */}
+                        <div className="text-center mt-8 py-6 border-t border-gray-200">
+                            <p className="text-gray-600 mb-2">
+                                <span className="font-semibold">Campaign Manager:</span> TrendSpot Media
+                            </p>
+                            <p className="text-sm text-gray-500">
+                                For questions or updates, contact your TrendSpot account manager
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // Render
+        ReactDOM.render(<IzellSEODashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>
